@@ -1,38 +1,22 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, Redirect } from "@nestjs/common";
+import { Controller, Post } from "@nestjs/common";
 import { CreateUserDto } from "src/dto/create-user.dto";
+import { UsersService } from "./users.service";
 
 @Controller("users")
 export class UsersController {
-  @Get("/findall")
-  findAll(): string {
-    return "all users";
+
+  // dependecy injection
+  constructor(private readonly usersService: UsersService) {
+
   }
 
-  @Post("/register")
-  register(): string {
-    return "this is register route";
+  @Post('signup')
+  signup(){
+    return this.usersService.signup();
   }
 
-  @Get("docs")
-  @Redirect("https://docs.nestjs.com", 302)
-  getDocs(@Query("version") version) {
-    if (version && version == 5) {
-      return { url: "https://docs.nestjs.com/v5/" };
-    }
-  }
-
-  @Get(":id")
-  findUser(@Param() params): string {
-    return `This method returns ${params.id} user`;
-  }
-
-  @Post("/addUser")
-  async create(@Body() createUserDto: CreateUserDto) {
-    return createUserDto;
-  }
-
-  @Delete('/:id')
-  remove(@Param('id') id: string){
-    return `This method removes #${id} user.`
+  @Post('signin')
+  signin(){
+    return this.usersService.login();
   }
 }
