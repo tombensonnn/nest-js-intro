@@ -1,13 +1,21 @@
 import { Injectable } from "@nestjs/common";
-
+import { CreateUserType } from "../utils/types";
 
 @Injectable()
 export class UsersService {
-    login(){
-        return { msg: "hello i am login action" };
-    }
+  private users = [{ username: "can", email: "canuyumaz@can.com" }];
 
-    signup(){
-        return { msg: "hello i am register action" };
-    }
+  
+  createUser(user: CreateUserType) {
+    this.users.push(user);
+    return;
+  }
+
+  fetchUsers() {
+    return this.users;
+  }
+
+  getUserById(id: number){
+    return {id};
+  }
 }
